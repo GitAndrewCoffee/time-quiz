@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Timed Quiz!</title>
+    <link rel="stylesheet" href="./assets/style/style.css" />
+</head>
+
+<body>
+
+    <header>
+        <p>view high scores</p>
+
+        <p>Time Left</p>
+    </header>
+
+    <section id="startQuiz" class="activeSection">
+        <h1>Coding Quiz Challenge</h1>
+        <div class="introBlurb">The blah blah blah about the quiz</div>
+        <button id="startButton">Start the Quiz!</button>
+    </section>
+
+    <section id="activeQuiz" class="inactiveSection">
+        <h2 id="quizQuestion">Ask me anything!</h2>
+        <ol id="quizChoices">
+            <li>choices go here</li>
+        </ol>
+    </section>
+
+    <section id="completeQuiz" class="inactiveSection">
+        <h2>Your Final Score is</h2>
+        <div id="playerScore">Your score is:</div>
+        <form>
+            <input id="playerInitials">
+            <label>Enter your initials</label>
+            <button id="submitScore">Submit</button>
+        </form>
+    </section>
+
+    <section id="quizScores" class="inactiveSection">
+        <h2>High Scores</h2>
+        <ol id="highScores">
+            <li>scores go here</li>
+        </ol>
+        <button id="restartQuiz">Ok</button>
+        <button id="clearScores">Clear Scores</button>
+    </section>
+
+    <script src="./assets/js/script.js"></script>
+</body>
+</html>
