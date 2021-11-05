@@ -10,81 +10,70 @@ var quizQuestions = []; //A list of questions
 //HTML Element Variables
 
 //Global Elements
-var gameClockEl = window.document.querySElector("#gameClock");
-var startQuizEl = window.document.querySElector("#startQuiz");
-var activeQuizEl = window.document.querySElector("#activeQuiz");
-var completeQuizEl = window.document.querySElector("#completeQuiz");
-var quizScoresEl = window.document.querySElector("#quizScores");
+var gameClockEl = document.querySelector("#gameClock");
+var startQuizEl = document.querySelector("#startQuiz");
+var activeQuizEl = document.querySelector("#activeQuiz");
+var completeQuizEl = document.querySelector("#completeQuiz");
+var quizScoresEl = document.querySelector("#quizScores");
 
 //Quiz Question Elements
-var quizQuestionEl = window.document.querySElector("#quizQuestion");
-var quizChoicesEl = window.document.querySElector("#quizChoices");
-var answerWasEl = window.document.querySElector("#answerWas");
+var quizQuestionEl = document.querySelector("#quizQuestion");
+var quizChoicesEl = document.querySelector("#quizChoices");
+var answerWasEl = document.querySelector("#answerWas");
 
 //Quiz Complete Elements
-var playerScoreEl = window.document.querySElector("#playerScore");
-var playerInitialsEl = window.document.querySElector("#playerInitials");
+var playerScoreEl = document.querySelector("#playerScore");
+var playerInitialsEl = document.querySelector("#playerInitials");
 
 //Quiz Scores Elements
-var highScoresEl = window.document.querySElector("#playerhighScores");
+var highScoresEl = document.querySelector("#playerhighScores");
 
 //
-//Code
+//Start
 //
 
-//The Questions class for creating multiple questions
+buildQuiz();
+loadQuestion(quizQuestions[currentQuestion]);
+viewSection(activeQuizEl);
 
-function questionOBJ(qText,c1,c2,c3,c4,qAnswer) {
-    
-    //Defining the properties of the question object
-    this.qText = qText;
-    this.c1 = c1;
-    this.c2 = c2;
-    this.c3 = c3;
-    this.c4 = c4;
-    this.qAnswer = qAnswer;
-
-    //Public Functions of the questionOBJ
-    return {
-        getQuestion : function() {
-            var returnMe = [this.qText, this.c1, this.c2, this.c3, this.c4];
-            return returnMe;
-        },
-
-        checkAnswer : function(answerNum){
-            if (answerNum === this.qAnswer) {
-                return "Correct"
-            } else {
-                return "Incorrect"
-            }
-        }
-    }
-}
+//
+//Functions n' Things
+//
 
 function buildQuiz () {
+    console.log('buildQuiz Started');
+    
     //initiate questions
-    quizQuestions.push(questionOBJ("Why","Why Not","Because","I said so","Well, you know",1));
-    quizQuestions.push(questionOBJ("When","Later","Not Now","Sometime","Tomrrow",2));
-    quizQuestions.push(questionOBJ("How","Easy","Hard","How come?","now brown cow",4));
-    quizQuestions.push(questionOBJ("What","for","matters","I said","goes around",3));
-    quizQuestions.push(questionOBJ("Where","There","Here","Somewhere","for",4));
+    quizQuestions.push(["Why","Why Not","Because","I said so","Well, you know",'1']);
+    quizQuestions.push(["When","Later","Not Now","Sometime","Tomrrow","2"]);
+    quizQuestions.push(["How","Easy","Hard","How come?","now brown cow","4"]);
+    quizQuestions.push(["What","for","matters","I said","goes around","3"]);
+    quizQuestions.push(["Where","There","Here","Somewhere","for","4"]);
         
+    console.log(quizQuestions);
 }
 
 function loadQuestion (loadMe) {
+    console.log('loadQuestions Started');
+    console.log(loadMe);
+    
     //clear out current question
     quizChoicesEl.innerHTML = '';
 
     //build out new question and choices
-    quizQuestionEl.innerHTML = loadMe.qText;
-    c1El = document.createElement('li', loadMe.c1);
-    c1El.parentElement('quizChoicesEl');
-    c2El = document.createElement('li', loadMe.c2);
-    c2El.parentElement('quizChoicesEl');
-    c3El = document.createElement('li', loadMe.c3);
-    c3El.parentElement('quizChoicesEl');
-    c4El = document.createElement('li', loadMe.c4);
-    c4El.parentElement('quizChoicesEl');
+    quizQuestionEl.innerHTML = loadMe[0];
+    c1El = document.createElement('li');
+    c1El.textContent = loadMe[1];
+    quizChoicesEl.appendChild(c1El);
+    c2El = document.createElement('li');
+    c2El.textContent = loadMe[2];
+    quizChoicesEl.appendChild(c2El);
+    c3El = document.createElement('li');
+    c3El.textContent = loadMe[3];
+    quizChoicesEl.appendChild(c3El);
+    c4El = document.createElement('li');
+    c4El.textContent = loadMe[4];
+    quizChoicesEl.appendChild(c4El);
     
     
 }
@@ -105,6 +94,7 @@ function viewSection (viewMe) {
 
     //Make viewMe an activeSection
     viewMe.classList.add("activeSection");
+    viewMe.classList.remove("inactiveSection");
 }
 
 function runQuiz () {
