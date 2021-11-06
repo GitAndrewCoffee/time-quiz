@@ -10,6 +10,7 @@ var finalScore = 0;
 var gameStatus = 0;
 var highScoreList = [];
 
+
 //HTML Element Variables
 
 //Global Elements
@@ -17,6 +18,9 @@ var startQuizEl = document.querySelector("#startQuiz");
 var activeQuizEl = document.querySelector("#activeQuiz");
 var completeQuizEl = document.querySelector("#completeQuiz");
 var quizScoresEl = document.querySelector("#quizScores");
+
+//Star Quiz Elements
+var startButtonEl = document.querySelector("#startButton");
 
 //Quiz Question Elements
 var quizQuestionEl = document.querySelector("#quizQuestion");
@@ -29,37 +33,39 @@ var playerInitialsEl = document.querySelector("#playerInitials");
 var submitScoreEl = document.querySelector("#submitScore");
 
 //Quiz Scores Elements
-var highScoresEl = document.querySelector("#playerhighScores");
+var highScoresEl = document.querySelector("#highScores");
 
 //
 //Start
 //
 
-gameStatus = 1;
-quizTimeLeft = quizTimeBase;
+function startGame () {
+    gameStatus = 1;
+    quizTimeLeft = quizTimeBase;
 
-console.log(quizTimeLeft);
+    console.log(quizTimeLeft);
 
-buildQuiz();
-loadQuestion(quizQuestions[currentQuestion]);
-viewSection(activeQuizEl);
-var timer = setInterval(function() {
+    buildQuiz();
+    loadQuestion(quizQuestions[currentQuestion]);
+    viewSection(activeQuizEl);
+    var timer = setInterval(function() {
 
-  
-    if (quizTimeLeft >= 0 && gameStatus === 1) {
     
-        document.getElementById("gameClock").innerHTML = quizTimeLeft.toString();
-        quizTimeLeft = quizTimeLeft - 1;
-    
-    } else if (gameStatus ===1) {
+        if (quizTimeLeft >= 0 && gameStatus === 1) {
+        
+            document.getElementById("gameClock").innerHTML = quizTimeLeft.toString();
+            quizTimeLeft = quizTimeLeft - 1;
+        
+        } else if (gameStatus ===1) {
 
-        endGame();        
+            endGame();        
 
-    } else {
-       // Nothing
-    }
-    
-}, 1000);
+        } else {
+        // Nothing
+        }
+        
+    }, 1000);
+}
 
 //
 //Functions n' Things
@@ -72,9 +78,9 @@ function buildQuiz () {
     //initiate questions
     quizQuestions.push(["Why","Why Not","Because","I said so","Well, you know",'1']);
     quizQuestions.push(["When","Later","Not Now","Sometime","Tomrrow","2"]);
-    quizQuestions.push(["How","Easy","Hard","How come?","now brown cow","4"]);
-    quizQuestions.push(["What","for","matters","I said","goes around","3"]);
-    quizQuestions.push(["Where","There","Here","Somewhere","for","4"]);
+    quizQuestions.push(["How","Easy","Hard","How come?","now brown cow","3"]);
+    quizQuestions.push(["What","for","matters","I said","goes around","4"]);
+    quizQuestions.push(["Where","There","Here","Somewhere","for","1"]);
         
     console.log(quizQuestions);
 }
@@ -88,19 +94,48 @@ function loadQuestion (loadMe) {
 
     //build out new question and choices
     quizQuestionEl.innerHTML = loadMe[0];
+    
+    //Populate question list in UI
+
     c1El = document.createElement('li');
     c1El.textContent = loadMe[1];
+    c1El.id = 'c1';
+    c1El.addEventListener("click", function() {
+
+        answerQuestion(1);
+    
+    });
     quizChoicesEl.appendChild(c1El);
+
     c2El = document.createElement('li');
     c2El.textContent = loadMe[2];
     quizChoicesEl.appendChild(c2El);
+    c2El.id = 'c2';
+    c2El.addEventListener("click", function() {
+
+        answerQuestion(2);
+    
+    });
+
     c3El = document.createElement('li');
     c3El.textContent = loadMe[3];
     quizChoicesEl.appendChild(c3El);
+    c3El.id = 'c3';
+    c3El.addEventListener("click", function() {
+
+        answerQuestion(3);
+    
+    });
+
     c4El = document.createElement('li');
     c4El.textContent = loadMe[4];
     quizChoicesEl.appendChild(c4El);
+    c4El.id = 'c1';
+    c4El.addEventListener("click", function() {
+
+        answerQuestion(4);
     
+    });     
     
 }
 
@@ -144,13 +179,14 @@ function endGame () {
 function answerQuestion (playerChoice) {
 
     var questionResult = 'None';
-    console.log(playerChoice);
-    console.log(quizQuestions[currentQuestion][5].toString);
+    console.log('playerChoice started!');
+    console.log('playerChoice = ' + playerChoice);
+    console.log('Correct Choice = ' + quizQuestions[currentQuestion][5]);
 
-    if (quizQuestions[currentQuestion][5] === playerChoice) {
+    if (quizQuestions[currentQuestion][5].toString() === playerChoice.toString()) {
 
         questionResult = 'Correct!'
-
+        
     } else {
 
         questionResult = 'WRONG'
@@ -158,6 +194,7 @@ function answerQuestion (playerChoice) {
         
     }
     
+    console.log(questionResult);
     answerWasEl.textContent = questionResult;
 
     if (currentQuestion === quizQuestions.length - 1) {
@@ -183,6 +220,8 @@ function submitNewScore (newScore, newInitials) {
 
     viewSection(quizScoresEl);
 
+    answerWasEl.textContent = 'Game Over'
+
 }
 
 function saveHighScores(){
@@ -194,6 +233,16 @@ function saveHighScores(){
 function loadHighScores(){
 
     console.log('Loading High Scores');
+    highScoreList.forEach(function(thisScore){
+
+        console.log('this[0] is ' + thisScore[0]);
+        console.log('this[1] is ' + thisScore[1]);
+
+        scoreEl = document.createElement('li');
+        scoreEl.textContent = thisScore[0] + " " + thisScore[1];
+        highScoresEl.appendChild(scoreEl);
+
+    });
 
 }
 
@@ -201,14 +250,17 @@ function loadHighScores(){
 // Event Listeners
 //
 
-quizChoicesEl.addEventListener("click", function() {
-
-    answerQuestion(1);
-
-});
-
 submitScoreEl.addEventListener("click", function() {
+    
+    console.log("player initials are: " + playerInitialsEl.value);
 
-    submitNewScore(finalScore);
+    submitNewScore(finalScore, playerInitialsEl.value);
 
 });
+
+startButtonEl.addEventListener("click",function(){
+
+    startGame();
+
+});
+
