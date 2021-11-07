@@ -10,63 +10,125 @@
 
 <body>
 
+    <!-- Header is always displayed and contains the game clock and pseudo link to high scores -->
     <header>
-        <p id="scoreLink">view high scores</p>
 
-        <div id="gameClock">Time Left</div>
+        <p id="scoreLink">View high scores</p>
+
+        <div id="gameClock">Game Clock</div>
+
     </header>
 
+    <!-- This section is visible using the activeSection and not inactive section style.
+         The visbility is dynamically updated as a player navigates the quiz -->
     <section id="startQuiz" class="activeSection">
+       
         <h1>Coding Quiz Challenge</h1>
-        <p>The blah blah blah about the quiz</p>
+       
+        <p>Here is a quick quiz about coding in HTML, CSS and JavaScript.  The faster you complete the quiz, the higher your score.  Be carefull, wong answers will shorted the game!</p>
+       
         <button id="startButton">Start the Quiz!</button>
+
     </section>
 
+    <!--This section contains the quiz questions and player choices.
+        The visibility and content are dynamically updated
+        The content style types are used to space the question to the right-->
     <section id="activeQuiz" class="contentMain inactiveSection">
+
         <div class="contentRow">
+
             <div class="contentTitle"></div>
+
             <div class="contentHolder">
+
                 <h2 id="quizQuestion">Ask me anything!</h2>
+
                 <ol id="quizChoices" class="hoverColorLi">
+
                     <li>choices go here</li>
+
                 </ol>
+
             </div>
+
         </div>
+
     </section>
 
+    <!--This section prompts the user to enter a score on a successful completion of the quiz.
+        The visibility and content are dynamically updated
+        The content style types are used to space the question to the right-->
     <section id="completeQuiz" class="contentMain inactiveSection">
+
         <div class="contentRow">
+
             <div class="contentTitle"></div>
+
             <div class="contentHolder">
+
                 <h2>All Done!</h2>
+                
                 <div>
                     Your final score score is:
+
                     <a id="playerScore"></a>
+
                 </div>
+                
                 <div>
+                    
                     <label>Enter your initials</label>
+                    
                     <input id="playerInitials">
+                    
                     <button id="submitScore" class="genButton">Submit</button>
+
                 </div>
+
                 </div>
+
+            </div>
+
     </section>
 
+
+    <!--This section displays the stored high score list.
+        The visibility and content are dynamically updated
+        The content style types are used to space the question to the right-->
     <section id="quizScores" class="contentMain inactiveSection">
+    
         <h2>High Scores</h2>
+    
         <ol id="highScores">
+    
             <li>scores go here</li>
+    
         </ol>
+    
         <button id="returnToStart" class="genButton">Ok</button>
+    
         <button id="clearScores" class="genButton">Clear Scores</button>
+    
     </section>
 
+    <!--This section displays the result of the last question.
+        it is always visible
+        The content style types are used to space the question to the right-->
     <footer class="contentMain">
+        
         <div class="contentRow">
+        
             <div class="contentTitle">
+        
             </div>
+        
             <div class="contentHolder">
+        
                 <h2 id="answerWas"></h2>                
+        
             </div>
+        
         </div>
         
     </footer>

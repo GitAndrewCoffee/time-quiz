@@ -13,14 +13,15 @@ var highScoreList = []; //A list of high scores.
 
 //HTML Element Variables
 
-//Global Elements
+//Section Elements for visibility control
 var startQuizEl = document.querySelector("#startQuiz");
 var activeQuizEl = document.querySelector("#activeQuiz");
 var completeQuizEl = document.querySelector("#completeQuiz");
 var quizScoresEl = document.querySelector("#quizScores");
 
-//Header Elements
+//Header and footer Elements
 var scoreLinkEl = document.querySelector("#scoreLink");
+var answerWasEl = document.querySelector("#answerWas");
 //Clock element is linked in startGame/start interval
 
 //Star Quiz Elements
@@ -29,7 +30,6 @@ var startButtonEl = document.querySelector("#startButton");
 //Quiz Question Elements
 var quizQuestionEl = document.querySelector("#quizQuestion");
 var quizChoicesEl = document.querySelector("#quizChoices");
-var answerWasEl = document.querySelector("#answerWas");
 
 //Quiz Complete Elements
 var playerScoreEl = document.querySelector("#playerScore");
@@ -42,10 +42,12 @@ var returnToStartEl = document.querySelector("#returnToStart");
 var clearScoresEl = document.querySelector("#clearScores");
 
 //
-//Start
+//Main function
 //
 
 function startGame () {
+    
+    //reset game variables
     gameStatus = 1;
     quizTimeLeft = quizTimeBase;
     currentQuestion = 0;
@@ -53,9 +55,12 @@ function startGame () {
 
     console.log(quizTimeLeft);
 
+    //Call functions to build out the questions, load the first question into the HTML and make the quiz section visible
     buildQuiz();
     loadQuestion(quizQuestions[currentQuestion]);
     viewSection(activeQuizEl);
+
+    //run the game timer
     var timer = setInterval(function() {
 
     
@@ -76,41 +81,48 @@ function startGame () {
 }
 
 //
-//Functions n' Things
+//Functions
 //
 
+//Build the quiz questions into an array
 function buildQuiz () {
     
     console.log('buildQuiz Started');
 
-    if (quizQuestions[0] === undefined) {
-    quizQuestions.push(["Why","Why Not","Because","I said so","Well, you know",'1']);
-    quizQuestions.push(["When","Later","Not Now","Sometime","Tomrrow","2"]);
-    quizQuestions.push(["How","Easy","Hard","How come?","now brown cow","3"]);
-    quizQuestions.push(["What","for","matters","I said","goes around","4"]);
-    quizQuestions.push(["Where","There","Here","Somewhere","for","1"]);
+    if (quizQuestions[0] === undefined) { //The if statement avoids adding the questions to the array in later attempts.
+    
+        quizQuestions.push(["Which of the following does not make a comment in HTML, CSS or JavaScript?","//","<!-- --!>","/* */","<* *>",'4']);
+        
+        quizQuestions.push(["Which one of these file would require a DOCTYPE in the header?","style.css","index.html","script.js","screen_shot.jpg","2"]);
+        
+        quizQuestions.push(["Which one of these is a type of loop in JavaScript?","Four","Do Until","Do While","loopWhile","3"]);
+        
+        quizQuestions.push(["To which one of these HTML elements can you attach an event listener?","<button></button>","<a></a>","<hero></hero>","All of the above","4"]);
+        
+        quizQuestions.push(["Why do we add comments to our code?","To make our code more readable","To get a better grade","Because I was told to","It is faster to write","1"]);
     }
 
     console.log(quizQuestions);
     
 }
 
+// load a specific question into the HTML
 function loadQuestion (loadMe) {
+    
     console.log('loadQuestions Started');
     console.log(loadMe);
     
     //clear out current question
     quizChoicesEl.innerHTML = '';
 
-    //build out new question and choices
+    //Populate the question
     quizQuestionEl.innerHTML = loadMe[0];
     
-    //Populate question list in UI
+    //Populate player choice list in UI
 
     c1El = document.createElement('li');
     c1El.textContent = loadMe[1];
     c1El.id = 'c1';
-    // c1El.classList.add("hoverColor");
     c1El.addEventListener("click", function() {
 
         answerQuestion(1);
@@ -150,6 +162,7 @@ function loadQuestion (loadMe) {
     
 }
 
+//This function makes the viewMe section visible and all other dynamic section invisible
 function viewSection (viewMe) {
     
     //Add inactiveSection CSS to hide sections
@@ -169,22 +182,26 @@ function viewSection (viewMe) {
     viewMe.classList.remove("inactiveSection");
 }
 
-
+//This function handles the end of the game for time or questions answered
 function endGame () {
     
     gameStatus = 0; //end the timer loop
     
+    //This accounts for the game clock going to 0 before ending the game.
     if (quizTimeLeft === quizTimeBase){
         finalScore = quizTimeLeft;
     } else {
         finalScore = quizTimeLeft + 1; //Accounts for time loop, avoids -1 on time out.
     }
     
+    //end the game clock
     quizTimeLeft = 0;
     document.getElementById("gameClock").innerHTML = "Game Over!";
     
-    if (finalScore === 0){
+    //route to entering initials if the score is greater than 0 or just to the high scores if 0 or less
+    if (finalScore > 0){
 
+        answerWasEl.textContet = "Out of time - GAME OVER"
         viewSection(quizScoresEl);
 
     } else {
@@ -196,6 +213,7 @@ function endGame () {
 
 }
 
+//This checks the player choice against the question's correct answer
 function answerQuestion (playerChoice) {
 
     var questionResult = 'None';
@@ -203,6 +221,7 @@ function answerQuestion (playerChoice) {
     console.log('playerChoice = ' + playerChoice);
     console.log('Correct Choice = ' + quizQuestions[currentQuestion][5]);
 
+    //evaluate the answer
     if (quizQuestions[currentQuestion][5].toString() === playerChoice.toString()) {
 
         questionResult = 'Correct!'
@@ -214,9 +233,11 @@ function answerQuestion (playerChoice) {
         
     }
     
+    //update the footer with the result
     console.log(questionResult);
     answerWasEl.textContent = questionResult;
 
+    //if this was the last question, end the game.  Otherwise move on to the next question.
     if (currentQuestion === quizQuestions.length - 1) {
         
         endGame();
@@ -230,27 +251,40 @@ function answerQuestion (playerChoice) {
 
 }
 
+//capture player initials and add to high score list
 function submitNewScore (newScore, newInitials) {
 
     var newEntry = [newScore, newInitials];
 
+    //Add to highscore list
     highScoreList.push (newEntry);
-    saveHighScores();
+    
+    //Save high scores
+    saveHighScores();    
+    
+    //Refresh the scores in the HTML
     loadHighScores();
 
+    //make the high score section visible
     viewSection(quizScoresEl);
 
     answerWasEl.textContent = 'Game Over'
 
 }
 
+//Save and store high score list
 function saveHighScores(){
 
     console.log('Saving High Scores');
+
+    //Sort the high scores numerically by score
     highScoreList.sort(function(a, b){return b[0] - a[0]});
+
+    //save to local storage
     localStorage.setItem("scores", JSON.stringify(highScoreList));
 }
 
+//load high scores from local storage and update HTML
 function loadHighScores(){
 
     console.log('Loading High Scores');
@@ -265,10 +299,11 @@ function loadHighScores(){
 
     console.log('loadScores is ' + loadScores);
 
+    //reset highScoreList variable and repopulate with list from local storage
     highScoreList = [];
     highScoreList = JSON.parse(loadScores);
 
-    //rebuild list
+    //rebuild list in HTML
 
     highScoreList.forEach(function(thisScore){
 
@@ -282,8 +317,10 @@ function loadHighScores(){
     });
    } 
 
+//navigate to high scores if user clicks header link
 function goToScores () {
 
+    //check to see if the game was running and end it if it was
     if (quizTimeLeft > 0) {
     
         console.log("goToScores is running");
