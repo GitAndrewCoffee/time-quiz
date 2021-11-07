@@ -8,7 +8,7 @@ var currentQuestion = 0; // Current Question
 var quizQuestions = []; //A list of questions
 var finalScore = 0; //The players score after the game ends
 var gameStatus = 0; //Is the game active?
-var highScoreList = []; //A list of high scores.
+var highScoreList = ["0","No Scores"]; //A list of high scores.
 
 
 //HTML Element Variables
