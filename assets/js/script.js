@@ -303,7 +303,7 @@ function loadHighScores(){
     highScoreList = [];
 
     //check to see if anything was loaded from local storage and then update the high score array
-    if (loadScores !== undefined) {
+    if (loadScores !== null) {
     
         highScoreList = JSON.parse(loadScores);
 
