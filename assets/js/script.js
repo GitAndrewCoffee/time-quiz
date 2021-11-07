@@ -6,9 +6,9 @@ var quizTimeBase = 120; //Time in Seconds for the quiz
 var quizTimeLeft = 0; //Time left in Seconds
 var currentQuestion = 0; // Current Question
 var quizQuestions = []; //A list of questions
-var finalScore = 0;
-var gameStatus = 0;
-var highScoreList = [];
+var finalScore = 0; //The players score after the game ends
+var gameStatus = 0; //Is the game active?
+var highScoreList = []; //A list of high scores.
 
 
 //HTML Element Variables
@@ -34,6 +34,8 @@ var submitScoreEl = document.querySelector("#submitScore");
 
 //Quiz Scores Elements
 var highScoresEl = document.querySelector("#highScores");
+var returnToStartEl = document.querySelector("#returnToStart");
+var clearScoresEl = document.querySelector("#clearScores");
 
 //
 //Start
@@ -42,6 +44,8 @@ var highScoresEl = document.querySelector("#highScores");
 function startGame () {
     gameStatus = 1;
     quizTimeLeft = quizTimeBase;
+    currentQuestion = 0;
+    loadHighScores()
 
     console.log(quizTimeLeft);
 
@@ -74,15 +78,17 @@ function startGame () {
 function buildQuiz () {
     
     console.log('buildQuiz Started');
-    
-    //initiate questions
+
+    if (quizQuestions[0] === undefined) {
     quizQuestions.push(["Why","Why Not","Because","I said so","Well, you know",'1']);
     quizQuestions.push(["When","Later","Not Now","Sometime","Tomrrow","2"]);
     quizQuestions.push(["How","Easy","Hard","How come?","now brown cow","3"]);
     quizQuestions.push(["What","for","matters","I said","goes around","4"]);
     quizQuestions.push(["Where","There","Here","Somewhere","for","1"]);
-        
+    }
+
     console.log(quizQuestions);
+    
 }
 
 function loadQuestion (loadMe) {
@@ -227,12 +233,29 @@ function submitNewScore (newScore, newInitials) {
 function saveHighScores(){
 
     console.log('Saving High Scores');
-
+    highScoreList.sort(function(a, b){return b[0] - a[0]});
+    localStorage.setItem("scores", JSON.stringify(highScoreList));
 }
 
 function loadHighScores(){
 
     console.log('Loading High Scores');
+
+    //reset list
+
+    highScoresEl.innerHTML = "";
+
+    //load from storage
+
+    var loadScores = localStorage.getItem("scores");
+
+    console.log('loadScores is ' + loadScores);
+
+    highScoreList = [];
+    highScoreList = JSON.parse(loadScores);
+
+    //rebuild list
+
     highScoreList.forEach(function(thisScore){
 
         console.log('this[0] is ' + thisScore[0]);
@@ -243,8 +266,9 @@ function loadHighScores(){
         highScoresEl.appendChild(scoreEl);
 
     });
+   } 
 
-}
+
 
 //
 // Event Listeners
@@ -261,6 +285,20 @@ submitScoreEl.addEventListener("click", function() {
 startButtonEl.addEventListener("click",function(){
 
     startGame();
+
+});
+
+returnToStartEl.addEventListener("click",function(){
+
+    viewSection(startQuizEl);
+
+});
+
+clearScoresEl.addEventListener("click",function(){
+
+    highScoreList = [];
+    saveHighScores();
+    loadHighScores();
 
 });
 
