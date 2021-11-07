@@ -199,7 +199,7 @@ function endGame () {
     document.getElementById("gameClock").innerHTML = "Game Over!";
     
     //route to entering initials if the score is greater than 0 or just to the high scores if 0 or less
-    if (finalScore > 0){
+    if (finalScore < 1){
 
         answerWasEl.textContet = "Out of time - GAME OVER"
         viewSection(quizScoresEl);
@@ -301,20 +301,28 @@ function loadHighScores(){
 
     //reset highScoreList variable and repopulate with list from local storage
     highScoreList = [];
-    highScoreList = JSON.parse(loadScores);
+
+    //check to see if anything was loaded from local storage and then update the high score array
+    if (loadScores !== undefined) {
+    
+        highScoreList = JSON.parse(loadScores);
+
+    }
 
     //rebuild list in HTML
 
-    highScoreList.forEach(function(thisScore){
+    if (highScoreList[0] !== undefined) {
+        highScoreList.forEach(function(thisScore){
 
-        console.log('this[0] is ' + thisScore[0]);
-        console.log('this[1] is ' + thisScore[1]);
+            console.log('this[0] is ' + thisScore[0]);
+            console.log('this[1] is ' + thisScore[1]);
 
-        scoreEl = document.createElement('li');
-        scoreEl.textContent = thisScore[0] + " " + thisScore[1];
-        highScoresEl.appendChild(scoreEl);
+            scoreEl = document.createElement('li');
+            scoreEl.textContent = thisScore[0] + " " + thisScore[1];
+            highScoresEl.appendChild(scoreEl);
 
-    });
+        });
+    }
    } 
 
 //navigate to high scores if user clicks header link
