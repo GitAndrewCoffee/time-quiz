@@ -19,6 +19,10 @@ var activeQuizEl = document.querySelector("#activeQuiz");
 var completeQuizEl = document.querySelector("#completeQuiz");
 var quizScoresEl = document.querySelector("#quizScores");
 
+//Header Elements
+var scoreLinkEl = document.querySelector("#scoreLink");
+//Clock element is linked in startGame/start interval
+
 //Star Quiz Elements
 var startButtonEl = document.querySelector("#startButton");
 
@@ -177,8 +181,17 @@ function endGame () {
     
     quizTimeLeft = 0;
     document.getElementById("gameClock").innerHTML = "Game Over!";
-    viewSection(completeQuizEl);
-    playerScoreEl.textContent = finalScore.toString();
+    
+    if (finalScore === 0){
+
+        viewSection(quizScoresEl);
+
+    } else {
+
+        viewSection(completeQuizEl);
+        playerScoreEl.textContent = finalScore.toString();
+
+    }
 
 }
 
@@ -268,7 +281,22 @@ function loadHighScores(){
     });
    } 
 
+function goToScores () {
 
+    if (quizTimeLeft > 0) {
+    
+        console.log("goToScores is running");
+        answerWasEl.textContent = "High Scores";
+        quizTimeLeft = 0;
+        
+    } else {
+
+        loadHighScores();
+        viewSection(quizScoresEl);
+
+    }
+    
+}
 
 //
 // Event Listeners
@@ -302,3 +330,8 @@ clearScoresEl.addEventListener("click",function(){
 
 });
 
+scoreLinkEl.addEventListener("click",function(){
+
+    goToScores();
+    
+});
