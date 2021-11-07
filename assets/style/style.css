@@ -1,6 +1,7 @@
 :root {
     --primary-color: magenta;
-    --secondary-color:purple;    
+    --secondary-color:purple;
+    font-size: 30px;    
 }
 
 .inactiveSection {
@@ -17,6 +18,7 @@ body {
 header {
     padding: 20px;
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-size: 20px;
 }
 
 footer {
@@ -25,6 +27,11 @@ border-top: 2px;
 border-color: gray;
 border-top-style: solid;
 
+}
+
+footer h2 {
+    color: var(--secondary-color);
+    font-size: 50px;
 }
 
 #scoreLink {
@@ -53,6 +60,17 @@ border-top-style: solid;
 
 #quizChoices {
     font-size: 30px;
+}
+
+#playerInitials {
+    font-size: 30px;
+    font-style: bold;
+}
+
+.genButton {
+    background:var(--secondary-color);
+    font-size: 30px;
+    color: white;
 }
 
 .hoverColorLi li:hover {
