@@ -1,5 +1,17 @@
+:root {
+    --primary-color: magenta;
+    --secondary-color:purple;    
+}
+
 .inactiveSection {
     display: none;
+}
+
+body {
+    font-family: Helvetica, Arial, sans-serif;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
 }
 
 header {
@@ -9,7 +21,7 @@ header {
 
 #scoreLink {
     display: inline-block;
-    color:magenta;
+    color:var(--primary-color);
 }
 
 
@@ -21,3 +33,50 @@ header {
     font-size: 20px;
 }
 
+#startButton {
+    background:var(--primary-color);
+}
+
+#startQuiz {
+    text-align: center;
+}
+
+.contentRow {
+
+    margin-bottom: 25px;
+    border-radius: 15px 15px 15px 15px;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: center;
+
+}
+
+.contentTitle {
+    width: 20%;
+    border-right: medium;
+    border-right-style: solid;
+    align-items: center;
+}
+
+
+
+.contentMain {
+    width: 75%;
+    margin: 50px auto;
+    padding-bottom: 50px;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.contentHolder {
+
+    margin-bottom: 25px;
+    border-radius: 15px 15px 15px 15px;
+    display: flex;
+    align-items: stretch;
+    flex-wrap: wrap;
+    flex-direction: column;
+    justify-content: space-evenly;
+
+}

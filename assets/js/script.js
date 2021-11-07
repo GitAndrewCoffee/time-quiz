@@ -319,6 +319,7 @@ startButtonEl.addEventListener("click",function(){
 returnToStartEl.addEventListener("click",function(){
 
     viewSection(startQuizEl);
+    answerWasEl.textContent = "";
 
 });
 

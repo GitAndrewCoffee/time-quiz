@@ -18,15 +18,20 @@
 
     <section id="startQuiz" class="activeSection">
         <h1>Coding Quiz Challenge</h1>
-        <div class="introBlurb">The blah blah blah about the quiz</div>
+        <p>The blah blah blah about the quiz</p>
         <button id="startButton">Start the Quiz!</button>
     </section>
 
-    <section id="activeQuiz" class="inactiveSection">
-        <h2 id="quizQuestion">Ask me anything!</h2>
-        <ol id="quizChoices">
-            <li>choices go here</li>
-        </ol>
+    <section id="activeQuiz" class="contentMain inactiveSection">
+        <div class="contentRow">
+            <div class="contentTitle"></div>
+            <div class="contentHolder">
+                <h2 id="quizQuestion">Ask me anything!</h2>
+                <ol id="quizChoices">
+                    <li>choices go here</li>
+                </ol>
+            </div>
+        </div>
     </section>
 
     <section id="completeQuiz" class="inactiveSection">
@@ -49,7 +54,7 @@
     </section>
 
     <footer>
-        <h2 id="answerWas">Correct!</h2>
+        <h2 id="answerWas"></h2>
     </footer>
 
     <script src="./assets/js/script.js"></script>
