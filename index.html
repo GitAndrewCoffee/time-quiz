@@ -27,34 +27,48 @@
             <div class="contentTitle"></div>
             <div class="contentHolder">
                 <h2 id="quizQuestion">Ask me anything!</h2>
-                <ol id="quizChoices">
+                <ol id="quizChoices" class="hoverColorLi">
                     <li>choices go here</li>
                 </ol>
             </div>
         </div>
     </section>
 
-    <section id="completeQuiz" class="inactiveSection">
-        <h2>Your Final Score is</h2>
-        <div id="playerScore">Your score is:</div>
-        <div>
-            <label>Enter your initials</label>
-            <input id="playerInitials">
-            <button id="submitScore">Submit</button>
-        </div>
+    <section id="completeQuiz" class="contentMain inactiveSection">
+        <div class="contentRow">
+            <div class="contentTitle"></div>
+            <div class="contentHolder">
+                <h2>All Done!</h2>
+                <div>
+                    Your final score score is:
+                    <a id="playerScore"></a>
+                </div>
+                <div>
+                    <label>Enter your initials</label>
+                    <input id="playerInitials">
+                    <button id="submitScore">Submit</button>
+                </div>
+                </div>
     </section>
 
-    <section id="quizScores" class="inactiveSection">
+    <section id="quizScores" class="contentMain inactiveSection">
         <h2>High Scores</h2>
-        <ul id="highScores">
+        <ol id="highScores">
             <li>scores go here</li>
-        </ul>
+        </ol>
         <button id="returnToStart">Ok</button>
         <button id="clearScores">Clear Scores</button>
     </section>
 
-    <footer>
-        <h2 id="answerWas"></h2>
+    <footer class="contentMain">
+        <div class="contentRow">
+            <div class="contentTitle">
+            </div>
+            <div class="contentHolder">
+                <h2 id="answerWas"></h2>                
+            </div>
+        </div>
+        
     </footer>
 
     <script src="./assets/js/script.js"></script>

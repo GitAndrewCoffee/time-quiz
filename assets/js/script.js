@@ -110,6 +110,7 @@ function loadQuestion (loadMe) {
     c1El = document.createElement('li');
     c1El.textContent = loadMe[1];
     c1El.id = 'c1';
+    // c1El.classList.add("hoverColor");
     c1El.addEventListener("click", function() {
 
         answerQuestion(1);
